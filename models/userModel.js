@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema(
     },
     salt: {
       type: String,
-      required: true,
     },
     password: {
       type: String,
@@ -48,3 +47,4 @@ userSchema.pre("save", function (next) {
 });
 
 const User = mongoose.model("user", userSchema);
+module.exports = User;

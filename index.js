@@ -4,8 +4,15 @@ const mongoose = require('mongoose');
 const path = require('path');
 require('dotenv').config();
 
+const userRouter = require("./routes/userRoutes")
+
 app.set('view engine', 'ejs');
 app.set("views", path.resolve("./views"));
+
+app.use(express.urlencoded({extended: false}));
+app.use(express.json());
+
+app.use("/user", userRouter);
 
 app.get("/", (req, res) => {
     return res.render("home");
