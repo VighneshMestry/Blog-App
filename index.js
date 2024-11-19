@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(checkAuthentication("token"));
-app.use(express.static(path.resolve("./public/")))
+app.use(express.static(path.resolve("./public")))
 
 app.use("/user", userRouter);
 app.use("/blog", blogRouter);

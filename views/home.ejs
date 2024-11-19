@@ -9,15 +9,19 @@
     <%- include('link.ejs') %> <%- include('navbar.ejs') %>
 
     <div class="container mt-3">
-      <% blogs.forEach(blog => { %>
-      <div class="card mt-3" style="width: 18rem">
-        <img src=<%= blog.coverImageUrl %> class="card-img-top" alt="..." />
-        <div class="card-body">
-          <h5 class="card-title"><%= blog.title %></h5>
-          <a href="/blog/<%= blog._id %>" class="btn btn-primary">Read</a>
-        </div>
+      <div class="row row-cols-4">
+        <% blogs.forEach(blog => { %>
+            <div class="col">
+                <div class="card col" style="width: 18rem">
+                  <img src="<%= blog.coverImageUrl %>" class="card-img-top" />
+                  <div class="card-body">
+                    <h5 class="card-title"><%= blog.title %></h5>
+                    <a href="/blog/<%= blog._id %>" class="btn btn-primary">View</a>
+                  </div>
+                </div>
+              </div>
+            <% }) %>
       </div>
-      <% }) %>
     </div>
 
     <%- include('scripts.ejs') %>
