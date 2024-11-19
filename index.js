@@ -1,29 +1,37 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const mongoose = require('mongoose');
-const path = require('path');
+const mongoose = require("mongoose");
+const path = require("path");
 const cookieParser = require("cookie-parser");
-require('dotenv').config();
+require("dotenv").config();
+
 
 const userRouter = require("./routes/userRoutes");
-const { checkAuthentication } = require('./middlewares/auth');
+const blogRouter = require("./routes/blogRoutes");
+const { checkAuthentication } = require("./middlewares/auth");
+const Blog = require("./models/blogModel");
 
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
 
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(checkAuthentication('token'));
-
+app.use(checkAuthentication("token"));
+app.use(express.static(path.resolve("./public/")))
 
 app.use("/user", userRouter);
+app.use("/blog", blogRouter);
 
-app.get("/", (req, res) => {
-    return res.render("home", {
-        user: req.user
-    });
+app.get("/", async (req, res) => {
+    const allBlogs = await Blog.find({});
+  return res.render("home", {
+    user: req.user,
+    blogs: allBlogs
+  });
 });
 
 mongoose.connect("mongodb://127.0.0.1:27017/blog-app");
-app.listen(process.env.PORT, () => console.log(`Server started at PORT: ${process.env.PORT}`));
+app.listen(process.env.PORT, () =>
+  console.log(`Server started at PORT: ${process.env.PORT}`)
+);
