@@ -31,7 +31,8 @@ app.get("/", async (req, res) => {
   });
 });
 
-mongoose.connect("mongodb://127.0.0.1:27017/blog-app");
+// mongoose.connect("mongodb://127.0.0.1:27017/blog-app");
+mongoose.connect(process.env.MONGO_URL)
 app.listen(process.env.PORT, () =>
   console.log(`Server started at PORT: ${process.env.PORT}`)
 );
